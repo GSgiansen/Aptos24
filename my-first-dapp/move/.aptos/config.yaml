@@ -1,6 +1,7 @@
 ---
 profiles:
   default:
+    network: Devnet
     private_key: "0xd5515cd3ca4b64e1f022fc0339626701d18bb9dcec5b890c46e7a407c8ec234d"
     public_key: "0xd8b9b8662169513d3ca2e394f796dce3cfd4c0e448c764bf9b065eb47d9c24b9"
     account: a2333fafa6cc49f4b2893c0849bf2e8db7a2fcb14f587838d7c0d3eee1c26e69

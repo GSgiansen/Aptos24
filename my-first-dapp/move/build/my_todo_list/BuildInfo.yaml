@@ -12,10 +12,11 @@ compiled_package_info:
     todolist_addr: a2333fafa6cc49f4b2893c0849bf2e8db7a2fcb14f587838d7c0d3eee1c26e69
     vm: "0000000000000000000000000000000000000000000000000000000000000000"
     vm_reserved: "0000000000000000000000000000000000000000000000000000000000000000"
-  source_digest: 45FA0E7AFD249B32945AAFB20C24C2C141618885EF29FF2B716444D7929A938D
+  source_digest: 89F26B2BBDBC86E567C40DBCBAD16D8D4D018DE0C90D0D77C38B57C3EF4D9BCA
   build_flags:
     dev_mode: false
     test_mode: false
+    override_std: ~
     generate_docs: false
     generate_abis: false
     generate_move_model: true
@@ -33,6 +34,7 @@ compiled_package_info:
         - deprecated
         - event
         - expected_failure
+        - "fmt::skip"
         - legacy_entry_fun
         - "lint::allow_unsafe_randomness"
         - native_interface
