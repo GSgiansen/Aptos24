@@ -30,6 +30,8 @@ export function CreateCollection() {
   if (import.meta.env.PROD) navigate("/", { replace: true });
 
   // Collection data entered by the user on UI
+  const [collectionName, setCollectionName] = useState<string>('');
+  const [maxSupply, setMaxSupply] = useState<number>();
   const [royaltyPercentage, setRoyaltyPercentage] = useState<number>();
   const [preMintAmount, setPreMintAmount] = useState<number>();
   const [publicMintStartDate, setPublicMintStartDate] = useState<Date>();
@@ -77,6 +79,7 @@ export function CreateCollection() {
     try {
       if (!account) throw new Error("Please connect your wallet");
       if (!files) throw new Error("Please upload files");
+      if (maxSupply === undefined) throw new Error("Please enter max supply");
       if (account.address !== CREATOR_ADDRESS) throw new Error("Wrong account");
       if (isUploading) throw new Error("Uploading in progress");
 
@@ -84,7 +87,7 @@ export function CreateCollection() {
       setIsUploading(true);
 
       // Upload collection files to Irys
-      const { collectionName, collectionDescription, maxSupply, projectUri } = await uploadCollectionData(
+      const {collectionDescription, projectUri } = await uploadCollectionData(
         aptosWallet,
         files,
       );
@@ -220,6 +223,29 @@ export function CreateCollection() {
               className="basis-1/2"
             />
           </div>
+
+          <LabeledInput
+            id="collection-name"
+            required
+            label="Collection Name"
+            tooltip="The name of your NFT collection"
+            disabled={isUploading || !account}
+            onChange={(e) => {
+              setCollectionName(e.target.value);
+            }}
+            type="text"
+          />
+
+          <LabeledInput
+            id="max-supply"
+            required
+            label="Max Supply"
+            tooltip="The maximum number of NFTs in this collection"
+            disabled={isUploading || !account}
+            onChange={(e) => {
+              setMaxSupply(parseInt(e.target.value));
+            }}
+          />
 
           <LabeledInput
             id="mint-limit"
