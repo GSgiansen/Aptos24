@@ -4,7 +4,7 @@ import Placeholder3 from "@/assets/placeholders/bear-3.png";
 
 export const config: Config = {
   // TODO: Fill in your collection id
-  collection_id: "0x4f2df79d26efa79f2b6f280fcd534a9b36d4d7d71f39cda8ffa2d7e4f76c65c5",
+  collection_id: "0x9dd18dbc9b653b53a2c7a987c10c074837a6aa3d85354a63539acd1716c632c5",
 
   // Removing one or all of these socials will remove them from the page
   socials: {
