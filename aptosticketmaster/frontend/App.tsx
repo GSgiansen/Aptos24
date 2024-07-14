@@ -1,8 +1,9 @@
 import { Outlet, RouterProvider, createBrowserRouter } from "react-router-dom";
-
 import { Mint } from "@/pages/Mint";
 import { CreateCollection } from "@/pages/CreateCollection";
 import { MyCollections } from "@/pages/MyCollections";
+import { useWallet } from "@aptos-labs/wallet-adapter-react";
+import { VITE_MASTER_ACCOUNT } from "./constants";
 
 function Layout() {
   return (
@@ -12,30 +13,32 @@ function Layout() {
   );
 }
 
-const router = createBrowserRouter([
-  {
-    element: <Layout />,
-    children: [
-      {
-        path: "/",
-        element: <Mint />,
-      },
-      {
-        path: "create-collection",
-        element: <CreateCollection />,
-      },
-      {
-        path: "my-collections",
-        element: <MyCollections />,
-      },
-    ],
-  },
-]);
-
 function App() {
+  const aptosWallet = useWallet();
+  const isWalletAccountEqual = aptosWallet.account === VITE_MASTER_ACCOUNT;
+
   return (
     <>
-      <RouterProvider router={router} />
+        <RouterProvider router={createBrowserRouter([
+          {
+            element: <Layout />,
+            children: [
+              {
+                path: "/",
+                element: <Mint />,
+              },
+              {
+                path: "create-collection",
+                element: isWalletAccountEqual ? <CreateCollection /> :  <div>Unauthorized access</div>
+              },
+              {
+                path: "my-collections",
+                element: <MyCollections />,
+              },
+            ],
+          },
+        ])} />
+
     </>
   );
 }
