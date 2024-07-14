@@ -24,3 +24,6 @@ dist-ssr
 *.sw?
 venv
 frontend/.next
+config.yaml
+.env
+aptosticketmaster
