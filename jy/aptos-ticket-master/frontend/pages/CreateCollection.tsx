@@ -119,9 +119,9 @@ export function CreateCollection() {
 
       // Concatenate the description fields
       const collectionDescription = `
-        Movie Details: ${movieDetails}<br>
-        Movie Type: ${movieType}<br>
-        Show Time: ${formattedShowTime}<br>
+        Movie Details: ${movieDetails}
+        Movie Type: ${movieType}
+        Show Time: ${formattedShowTime}
         Pricing: ${pricing}
       `.trim();
 
