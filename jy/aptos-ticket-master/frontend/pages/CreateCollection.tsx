@@ -19,6 +19,8 @@ import { DateTimeInput } from "@/components/ui/date-time-input";
 import { ConfirmButton } from "@/components/ui/confirm-button";
 // Entry functions
 import { createCollection } from "@/entry-functions/create_collection";
+// Datetime functions
+import { format } from 'date-fns';
 
 export function CreateCollection() {
   // Wallet Adapter provider
@@ -31,9 +33,14 @@ export function CreateCollection() {
 
   // Collection data entered by the user on UI
   const [collectionName, setCollectionName] = useState<string>('');
+  const [movieDetails, setMovieDetails] = useState<string>('');
+  const [movieType, setMovieType] = useState<string>('');
+  const [showDate, setShowDate] = useState<Date>();
+  const [showTime, setShowTime] = useState<string>();
+  const [pricing, setPricing] = useState<number>();
   const [maxSupply, setMaxSupply] = useState<number>();
-  const [royaltyPercentage, setRoyaltyPercentage] = useState<number>();
-  const [preMintAmount, setPreMintAmount] = useState<number>();
+  const royaltyPercentage = 0;
+  const preMintAmount = 0;
   const [publicMintStartDate, setPublicMintStartDate] = useState<Date>();
   const [publicMintStartTime, setPublicMintStartTime] = useState<string>();
   const [publicMintEndDate, setPublicMintEndDate] = useState<Date>();
@@ -47,6 +54,19 @@ export function CreateCollection() {
 
   // Local Ref
   const inputRef = useRef<HTMLInputElement>(null);
+
+  // On show time change
+  const onShowTimeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const timeValue = event.target.value;
+    setShowTime(timeValue);
+
+    const [hours, minutes] = timeValue.split(":").map(Number);
+
+    showDate?.setHours(hours);
+    showDate?.setMinutes(minutes);
+    showDate?.setSeconds(0);
+    setShowDate(showDate);
+  };
 
   // On publish mint start date selected
   const onPublicMintStartTime = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -87,10 +107,23 @@ export function CreateCollection() {
       setIsUploading(true);
 
       // Upload collection files to Irys
-      const {collectionDescription, projectUri } = await uploadCollectionData(
+      const { projectUri } = await uploadCollectionData(
         aptosWallet,
         files,
       );
+
+      // Format the show time
+      const formattedShowTime = showDate
+      ? format(showDate, 'dd MMM yyyy, HH:mm')
+      : '';
+
+      // Concatenate the description fields
+      const collectionDescription = `
+        Movie Details: ${movieDetails}<br>
+        Movie Type: ${movieType}<br>
+        Show Time: ${formattedShowTime}<br>
+        Pricing: ${pricing}
+      `.trim();
 
       // Submit a create_collection entry function transaction
       const response = await signAndSubmitTransaction(
@@ -131,7 +164,7 @@ export function CreateCollection() {
 
   return (
     <>
-      <LaunchpadHeader title="Create New Collection" />
+      <LaunchpadHeader title="Movie Event Creation" />
 
       <div className="flex flex-col md:flex-row items-start justify-between px-4 py-2 gap-4 max-w-screen-xl mx-auto">
         <div className="w-full md:w-2/3 flex flex-col gap-y-4 order-2 md:order-1">
@@ -150,7 +183,7 @@ export function CreateCollection() {
 
           <Card>
             <CardHeader>
-              <CardDescription>Uploads collection files to Irys, a decentralized storage</CardDescription>
+              <CardDescription>Upload images of the movie and ticket, along with the metadata</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="flex flex-col items-start justify-between">
@@ -201,8 +234,8 @@ export function CreateCollection() {
           <div className="flex item-center gap-4 mt-4">
             <DateTimeInput
               id="mint-start"
-              label="Public mint start date"
-              tooltip="When minting becomes active"
+              label="Ticket Sales Start Date"
+              tooltip="When sales becomes active"
               disabled={isUploading || !account}
               date={publicMintStartDate}
               onDateChange={setPublicMintStartDate}
@@ -213,8 +246,8 @@ export function CreateCollection() {
 
             <DateTimeInput
               id="mint-end"
-              label="Public mint end date"
-              tooltip="When minting finishes"
+              label="Ticket Sales End Date"
+              tooltip="When sales finishes"
               disabled={isUploading || !account}
               date={publicMintEndDate}
               onDateChange={setPublicMintEndDate}
@@ -227,8 +260,8 @@ export function CreateCollection() {
           <LabeledInput
             id="collection-name"
             required
-            label="Collection Name"
-            tooltip="The name of your NFT collection"
+            label="Movie Title"
+            tooltip="Title of the movie"
             disabled={isUploading || !account}
             onChange={(e) => {
               setCollectionName(e.target.value);
@@ -237,10 +270,48 @@ export function CreateCollection() {
           />
 
           <LabeledInput
+            id="movie-details"
+            required
+            label="Movie Details"
+            tooltip="Details about the movie"
+            disabled={isUploading || !account}
+            onChange={(e) => {
+              setMovieDetails(e.target.value);
+            }}
+            type="text"
+          />
+
+          <LabeledInput
+            id="movie-type"
+            required
+            label="Movie Type"
+            tooltip="The type of movie, such as IMAX, 3D, etc."
+            disabled={isUploading || !account}
+            onChange={(e) => {
+              setMovieType(e.target.value);
+            }}
+            type="text"
+          />
+
+          <div className="flex item-center gap-4 mt-4">
+            <DateTimeInput
+              id="show-date"
+              label="Show Date"
+              tooltip="Date of the movie showing"
+              disabled={isUploading || !account}
+              date={showDate}
+              onDateChange={setShowDate}
+              time={showTime}
+              onTimeChange={onShowTimeChange}
+              className="basis-1/2"
+            />
+          </div>
+
+          <LabeledInput
             id="max-supply"
             required
-            label="Max Supply"
-            tooltip="The maximum number of NFTs in this collection"
+            label="Number of Seats"
+            tooltip="The maximum number of seats that is offered for this movie"
             disabled={isUploading || !account}
             onChange={(e) => {
               setMaxSupply(parseInt(e.target.value));
@@ -250,8 +321,8 @@ export function CreateCollection() {
           <LabeledInput
             id="mint-limit"
             required
-            label="Mint limit per address"
-            tooltip="How many NFTs an individual address is allowed to mint"
+            label="Limit per buyer"
+            tooltip="How many tickets an individual is allowed to buy"
             disabled={isUploading || !account}
             onChange={(e) => {
               setPublicMintLimitPerAccount(parseInt(e.target.value));
@@ -259,37 +330,19 @@ export function CreateCollection() {
           />
 
           <LabeledInput
-            id="royalty-percentage"
-            label="Royalty Percentage"
-            tooltip="The percentage of trading value that collection creator gets when an NFT is sold on marketplaces"
-            disabled={isUploading || !account}
-            onChange={(e) => {
-              setRoyaltyPercentage(parseInt(e.target.value));
-            }}
-          />
-
-          <LabeledInput
             id="mint-fee"
-            label="Mint fee per NFT in APT"
-            tooltip="The fee the nft minter is paying the collection creator when they mint an NFT, denominated in APT"
+            required
+            label="Ticket Price"
+            tooltip="The fee the buyer is paying the distributor when they buy a ticket, denominated in APT"
             disabled={isUploading || !account}
             onChange={(e) => {
               setPublicMintFeePerNFT(Number(e.target.value));
-            }}
-          />
-
-          <LabeledInput
-            id="for-myself"
-            label="Mint for myself"
-            tooltip="How many NFTs to mint immediately for the creator"
-            disabled={isUploading || !account}
-            onChange={(e) => {
-              setPreMintAmount(parseInt(e.target.value));
+              setPricing(Number(e.target.value))
             }}
           />
 
           <ConfirmButton
-            title="Create Collection"
+            title="Add Movie Event"
             className="self-start"
             onSubmit={onCreateCollection}
             disabled={
