@@ -59,7 +59,6 @@ export function MyCollections() {
                       >
                         {collection?.collection_name}
                       </a>
-                      <span>{collection?.collection_name}</span>
                     </div>
                   </TableCell>
                   <TableCell>
