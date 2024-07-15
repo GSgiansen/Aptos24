@@ -24,9 +24,6 @@ export const uploadCollectionData = async (
   aptosWallet: any,
   fileList: FileList,
 ): Promise<{
-  collectionName: string;
-  collectionDescription: string;
-  maxSupply: number;
   projectUri: string;
 }> => {
   // Convert FileList type into a File[] type
@@ -136,9 +133,6 @@ export const uploadCollectionData = async (
 
       return {
         projectUri: `${metadataFolderReceipt}/collection.json`,
-        maxSupply: imageFiles.length,
-        collectionName: parsedCollectionMetadata.name,
-        collectionDescription: parsedCollectionMetadata.description,
       };
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {

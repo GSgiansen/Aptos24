@@ -54,6 +54,11 @@ export const HeroSection: React.FC<HeroSectionProps> = () => {
       <Image
         src={collection?.cdn_asset_uris.cdn_image_uri ?? collection?.cdn_asset_uris.cdn_animation_uri ?? Placeholder1}
         rounded
+        style={{
+          width: '300px', // Fixed width
+          height: '300px', // Fixed height
+          objectFit: 'contain', // Maintain aspect ratio and contain within the dimensions
+        }}
         className="w-full md:basis-2/5 aspect-square object-cover self-center"
       />
       <div className="basis-3/5 flex flex-col gap-4">
