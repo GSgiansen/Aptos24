@@ -2,6 +2,7 @@ import { AccountAddress, GetCollectionDataResponse } from "@aptos-labs/ts-sdk";
 import { useState, useEffect } from "react";
 
 import { aptosClient } from "@/utils/aptosClient";
+import { getEventList } from "./getEventsAndTickets";
 
 /**
  * A react hook to get all collections under the current contract.
@@ -30,6 +31,7 @@ export function useGetCollections() {
   return collections;
 }
 
+
 const getRegistry = async () => {
   const registry = await aptosClient().view<[[{ inner: string }]]>({
     payload: {
@@ -57,13 +59,13 @@ const getCollections = async (objects: Array<string>) => {
   const collections = await Promise.all(
     objects.map(async (object: string) => {
       const formattedObjectAddress = AccountAddress.from(object).toString();
-
       const collection = await aptosClient().getCollectionDataByCreatorAddress({
         creatorAddress: formattedObjectAddress,
       });
-
       return collection;
     }),
   );
+
   return collections;
 };
+
