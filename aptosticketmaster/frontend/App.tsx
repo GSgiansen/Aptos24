@@ -4,6 +4,8 @@ import { CreateCollection } from "@/pages/CreateCollection";
 import { MyCollections } from "@/pages/MyCollections";
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
 import { VITE_MASTER_ACCOUNT } from "./constants";
+import { Events } from "./pages/Events";
+import EventDetail from "./pages/Events/EventDetail";
 
 function Layout() {
   return (
@@ -19,7 +21,8 @@ function App() {
 
   return (
     <>
-        <RouterProvider router={createBrowserRouter([
+      <RouterProvider
+        router={createBrowserRouter([
           {
             element: <Layout />,
             children: [
@@ -29,16 +32,24 @@ function App() {
               },
               {
                 path: "create-collection",
-                element: isWalletAccountEqual ? <CreateCollection /> :  <div>Unauthorized access</div>
+                element: isWalletAccountEqual ? <CreateCollection /> : <div>Unauthorized access</div>,
               },
               {
                 path: "my-collections",
                 element: <MyCollections />,
               },
+              {
+                path: "events",
+                element: <Events />,
+              },
+              {
+                path: "events/:eventId",
+                element: <EventDetail />,
+              },
             ],
           },
-        ])} />
-
+        ])}
+      />
     </>
   );
 }
