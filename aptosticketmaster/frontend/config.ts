@@ -1,6 +1,12 @@
 import Placeholder1 from "@/assets/placeholders/bear-1.png";
 import Placeholder2 from "@/assets/placeholders/bear-2.png";
 import Placeholder3 from "@/assets/placeholders/bear-3.png";
+import { COLLECTION_ADDRESS } from "@/constants";
+
+// Function to get collection ID from localStorage
+export function getCollectionId(): string | null {
+  return localStorage.getItem(COLLECTION_ADDRESS);
+}
 
 export const config: Config = {
   // TODO: Fill in your collection id
