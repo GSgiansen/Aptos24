@@ -1,5 +1,5 @@
 // External packages
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
 import { Link, useNavigate } from "react-router-dom";
 // Internal utils
@@ -21,6 +21,8 @@ import { ConfirmButton } from "@/components/ui/confirm-button";
 import { createCollection } from "@/entry-functions/create_collection";
 // Datetime functions
 import { format } from 'date-fns';
+import { VITE_MASTER_ACCOUNT } from "../constants";
+
 
 export function CreateCollection() {
   // Wallet Adapter provider
@@ -51,6 +53,20 @@ export function CreateCollection() {
 
   // Internal state
   const [isUploading, setIsUploading] = useState(false);
+
+  const [isWalletAccountEqual, setIsWalletAccountEqual] = useState(false);
+  useEffect(() => {
+    // Check if the wallet account is equal to the master account
+    if (account && account.address === VITE_MASTER_ACCOUNT) {
+      setIsWalletAccountEqual(true);
+    } else {
+      setIsWalletAccountEqual(false);
+    }
+  }, [account]);
+
+  // Rest of the code...
+
+
 
   // Local Ref
   const inputRef = useRef<HTMLInputElement>(null);
@@ -164,219 +180,206 @@ export function CreateCollection() {
 
   return (
     <>
-      <LaunchpadHeader title="Movie Event Creation" />
+      {isWalletAccountEqual? 
+      (
 
-      <div className="flex flex-col md:flex-row items-start justify-between px-4 py-2 gap-4 max-w-screen-xl mx-auto">
-        <div className="w-full md:w-2/3 flex flex-col gap-y-4 order-2 md:order-1">
-          {(!account || account.address !== CREATOR_ADDRESS) && (
-            <WarningAlert title={account ? "Wrong account connected" : "No account connected"}>
-              To continue with creating your collection, make sure you are connected with a Wallet and with the same
-              profile account as in your COLLECTION_CREATOR_ADDRESS in{" "}
-              <code className="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold">
-                .env
-              </code>{" "}
-              file
-            </WarningAlert>
-          )}
+      <><LaunchpadHeader title="Movie Event Creation" /><div className="flex flex-col md:flex-row items-start justify-between px-4 py-2 gap-4 max-w-screen-xl mx-auto">
+            <div className="w-full md:w-2/3 flex flex-col gap-y-4 order-2 md:order-1">
+              {(!account || account.address !== CREATOR_ADDRESS) && (
+                <WarningAlert title={account ? "Wrong account connected" : "No account connected"}>
+                  To continue with creating your collection, make sure you are connected with a Wallet and with the same
+                  profile account as in your COLLECTION_CREATOR_ADDRESS in{" "}
+                  <code className="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold">
+                    .env
+                  </code>{" "}
+                  file
+                </WarningAlert>
+              )}
 
-          <UploadSpinner on={isUploading} />
+              <UploadSpinner on={isUploading} />
 
-          <Card>
-            <CardHeader>
-              <CardDescription>Upload images of the movie and ticket, along with the metadata</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="flex flex-col items-start justify-between">
-                {!files?.length && (
-                  <Label
-                    htmlFor="upload"
-                    className={buttonVariants({
-                      variant: "outline",
-                      className: "cursor-pointer",
-                    })}
-                  >
-                    Choose Folder to Upload
-                  </Label>
-                )}
-                <Input
-                  className="hidden"
-                  ref={inputRef}
-                  id="upload"
-                  disabled={isUploading || !account}
-                  webkitdirectory="true"
-                  multiple
-                  type="file"
-                  placeholder="Upload Assets"
-                  onChange={(event) => {
-                    setFiles(event.currentTarget.files);
-                  }}
-                />
+              <Card>
+                <CardHeader>
+                  <CardDescription>Upload images of the movie and ticket, along with the metadata</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="flex flex-col items-start justify-between">
+                    {!files?.length && (
+                      <Label
+                        htmlFor="upload"
+                        className={buttonVariants({
+                          variant: "outline",
+                          className: "cursor-pointer",
+                        })}
+                      >
+                        Choose Folder to Upload
+                      </Label>
+                    )}
+                    <Input
+                      className="hidden"
+                      ref={inputRef}
+                      id="upload"
+                      disabled={isUploading || !account}
+                      webkitdirectory="true"
+                      multiple
+                      type="file"
+                      placeholder="Upload Assets"
+                      onChange={(event) => {
+                        setFiles(event.currentTarget.files);
+                      } } />
 
-                {!!files?.length && (
-                  <div>
-                    {files.length} files selected{" "}
-                    <Button
-                      variant="link"
-                      className="text-destructive"
-                      onClick={() => {
-                        setFiles(null);
-                        inputRef.current!.value = "";
-                      }}
-                    >
-                      Clear
-                    </Button>
+                    {!!files?.length && (
+                      <div>
+                        {files.length} files selected{" "}
+                        <Button
+                          variant="link"
+                          className="text-destructive"
+                          onClick={() => {
+                            setFiles(null);
+                            inputRef.current!.value = "";
+                          } }
+                        >
+                          Clear
+                        </Button>
+                      </div>
+                    )}
                   </div>
-                )}
+                </CardContent>
+              </Card>
+
+              <div className="flex item-center gap-4 mt-4">
+                <DateTimeInput
+                  id="mint-start"
+                  label="Ticket Sales Start Date"
+                  tooltip="When sales becomes active"
+                  disabled={isUploading || !account}
+                  date={publicMintStartDate}
+                  onDateChange={setPublicMintStartDate}
+                  time={publicMintStartTime}
+                  onTimeChange={onPublicMintStartTime}
+                  className="basis-1/2" />
+
+                <DateTimeInput
+                  id="mint-end"
+                  label="Ticket Sales End Date"
+                  tooltip="When sales finishes"
+                  disabled={isUploading || !account}
+                  date={publicMintEndDate}
+                  onDateChange={setPublicMintEndDate}
+                  time={publicMintEndTime}
+                  onTimeChange={onPublicMintEndTime}
+                  className="basis-1/2" />
               </div>
-            </CardContent>
-          </Card>
 
-          <div className="flex item-center gap-4 mt-4">
-            <DateTimeInput
-              id="mint-start"
-              label="Ticket Sales Start Date"
-              tooltip="When sales becomes active"
-              disabled={isUploading || !account}
-              date={publicMintStartDate}
-              onDateChange={setPublicMintStartDate}
-              time={publicMintStartTime}
-              onTimeChange={onPublicMintStartTime}
-              className="basis-1/2"
-            />
+              <LabeledInput
+                id="collection-name"
+                required
+                label="Movie Title"
+                tooltip="Title of the movie"
+                disabled={isUploading || !account}
+                onChange={(e) => {
+                  setCollectionName(e.target.value);
+                } }
+                type="text" />
 
-            <DateTimeInput
-              id="mint-end"
-              label="Ticket Sales End Date"
-              tooltip="When sales finishes"
-              disabled={isUploading || !account}
-              date={publicMintEndDate}
-              onDateChange={setPublicMintEndDate}
-              time={publicMintEndTime}
-              onTimeChange={onPublicMintEndTime}
-              className="basis-1/2"
-            />
-          </div>
+              <LabeledInput
+                id="movie-details"
+                required
+                label="Movie Details"
+                tooltip="Details about the movie"
+                disabled={isUploading || !account}
+                onChange={(e) => {
+                  setMovieDetails(e.target.value);
+                } }
+                type="text" />
 
-          <LabeledInput
-            id="collection-name"
-            required
-            label="Movie Title"
-            tooltip="Title of the movie"
-            disabled={isUploading || !account}
-            onChange={(e) => {
-              setCollectionName(e.target.value);
-            }}
-            type="text"
-          />
+              <LabeledInput
+                id="movie-type"
+                required
+                label="Movie Type"
+                tooltip="The type of movie, such as IMAX, 3D, etc."
+                disabled={isUploading || !account}
+                onChange={(e) => {
+                  setMovieType(e.target.value);
+                } }
+                type="text" />
 
-          <LabeledInput
-            id="movie-details"
-            required
-            label="Movie Details"
-            tooltip="Details about the movie"
-            disabled={isUploading || !account}
-            onChange={(e) => {
-              setMovieDetails(e.target.value);
-            }}
-            type="text"
-          />
+              <div className="flex item-center gap-4 mt-4">
+                <DateTimeInput
+                  id="show-date"
+                  label="Show Date"
+                  tooltip="Date of the movie showing"
+                  disabled={isUploading || !account}
+                  date={showDate}
+                  onDateChange={setShowDate}
+                  time={showTime}
+                  onTimeChange={onShowTimeChange}
+                  className="basis-1/2" />
+              </div>
 
-          <LabeledInput
-            id="movie-type"
-            required
-            label="Movie Type"
-            tooltip="The type of movie, such as IMAX, 3D, etc."
-            disabled={isUploading || !account}
-            onChange={(e) => {
-              setMovieType(e.target.value);
-            }}
-            type="text"
-          />
+              <LabeledInput
+                id="max-supply"
+                required
+                label="Number of Seats"
+                tooltip="The maximum number of seats that is offered for this movie"
+                disabled={isUploading || !account}
+                onChange={(e) => {
+                  setMaxSupply(parseInt(e.target.value));
+                } } />
 
-          <div className="flex item-center gap-4 mt-4">
-            <DateTimeInput
-              id="show-date"
-              label="Show Date"
-              tooltip="Date of the movie showing"
-              disabled={isUploading || !account}
-              date={showDate}
-              onDateChange={setShowDate}
-              time={showTime}
-              onTimeChange={onShowTimeChange}
-              className="basis-1/2"
-            />
-          </div>
+              <LabeledInput
+                id="mint-limit"
+                required
+                label="Limit per buyer"
+                tooltip="How many tickets an individual is allowed to buy"
+                disabled={isUploading || !account}
+                onChange={(e) => {
+                  setPublicMintLimitPerAccount(parseInt(e.target.value));
+                } } />
 
-          <LabeledInput
-            id="max-supply"
-            required
-            label="Number of Seats"
-            tooltip="The maximum number of seats that is offered for this movie"
-            disabled={isUploading || !account}
-            onChange={(e) => {
-              setMaxSupply(parseInt(e.target.value));
-            }}
-          />
+              <LabeledInput
+                id="mint-fee"
+                required
+                label="Ticket Price"
+                tooltip="The fee the buyer is paying the distributor when they buy a ticket, denominated in APT"
+                disabled={isUploading || !account}
+                onChange={(e) => {
+                  setPublicMintFeePerNFT(Number(e.target.value));
+                  setPricing(Number(e.target.value));
+                } } />
 
-          <LabeledInput
-            id="mint-limit"
-            required
-            label="Limit per buyer"
-            tooltip="How many tickets an individual is allowed to buy"
-            disabled={isUploading || !account}
-            onChange={(e) => {
-              setPublicMintLimitPerAccount(parseInt(e.target.value));
-            }}
-          />
+              <ConfirmButton
+                title="Add Movie Event"
+                className="self-start"
+                onSubmit={onCreateCollection}
+                disabled={!account ||
+                  !files?.length ||
+                  !publicMintStartDate ||
+                  !publicMintLimitPerAccount ||
+                  !account ||
+                  isUploading}
+                confirmMessage={<>
+                  <p>The upload process requires at least 2 message signatures</p>
+                  <ol className="list-decimal list-inside">
+                    <li>To upload collection cover image file and NFT image files into Irys.</li>
 
-          <LabeledInput
-            id="mint-fee"
-            required
-            label="Ticket Price"
-            tooltip="The fee the buyer is paying the distributor when they buy a ticket, denominated in APT"
-            disabled={isUploading || !account}
-            onChange={(e) => {
-              setPublicMintFeePerNFT(Number(e.target.value));
-              setPricing(Number(e.target.value))
-            }}
-          />
-
-          <ConfirmButton
-            title="Add Movie Event"
-            className="self-start"
-            onSubmit={onCreateCollection}
-            disabled={
-              !account ||
-              !files?.length ||
-              !publicMintStartDate ||
-              !publicMintLimitPerAccount ||
-              !account ||
-              isUploading
-            }
-            confirmMessage={
-              <>
-                <p>The upload process requires at least 2 message signatures</p>
-                <ol className="list-decimal list-inside">
-                  <li>To upload collection cover image file and NFT image files into Irys.</li>
-
-                  <li>To upload collection metadata file and NFT metadata files into Irys.</li>
-                </ol>
-                <p>In the case we need to fund a node on Irys, a transfer transaction submission is required also.</p>
-              </>
-            }
-          />
-        </div>
-        <div className="w-full md:w-1/3 order-1 md:order-2">
-          <Card>
-            <CardHeader className="body-md-semibold">Learn More</CardHeader>
-            <CardContent>
-              <Link to="https://aptos.dev/standards/digital-asset" className="body-sm underline" target="_blank">
-                Find out more about Digital Assets on Aptos
-              </Link>
-            </CardContent>
-          </Card>
-        </div>
-      </div>
+                    <li>To upload collection metadata file and NFT metadata files into Irys.</li>
+                  </ol>
+                  <p>In the case we need to fund a node on Irys, a transfer transaction submission is required also.</p>
+                </>} />
+            </div>
+            <div className="w-full md:w-1/3 order-1 md:order-2">
+              <Card>
+                <CardHeader className="body-md-semibold">Learn More</CardHeader>
+                <CardContent>
+                  <Link to="https://aptos.dev/standards/digital-asset" className="body-sm underline" target="_blank">
+                    Find out more about Digital Assets on Aptos
+                  </Link>
+                </CardContent>
+              </Card>
+            </div>
+          </div></>) 
+      : (<div>Only the master account can create a movie event</div>)}
     </>
   );
 }

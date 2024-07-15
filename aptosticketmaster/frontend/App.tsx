@@ -2,8 +2,6 @@ import { Outlet, RouterProvider, createBrowserRouter } from "react-router-dom";
 import { Mint } from "@/pages/Mint";
 import { CreateCollection } from "@/pages/CreateCollection";
 import { MyCollections } from "@/pages/MyCollections";
-import { useWallet } from "@aptos-labs/wallet-adapter-react";
-import { VITE_MASTER_ACCOUNT } from "./constants";
 
 function Layout() {
   return (
@@ -14,8 +12,6 @@ function Layout() {
 }
 
 function App() {
-  const aptosWallet = useWallet();
-  const isWalletAccountEqual = aptosWallet.account === VITE_MASTER_ACCOUNT;
 
   return (
     <>
@@ -29,7 +25,7 @@ function App() {
               },
               {
                 path: "create-collection",
-                element: isWalletAccountEqual ? <CreateCollection /> :  <div>Unauthorized access</div>
+                element: <CreateCollection />
               },
               {
                 path: "my-collections",
