@@ -16,8 +16,6 @@ function Layout() {
 }
 
 function App() {
-  const aptosWallet = useWallet();
-  const isWalletAccountEqual = aptosWallet.account === VITE_MASTER_ACCOUNT;
 
   return (
     <>
@@ -32,7 +30,8 @@ function App() {
               },
               {
                 path: "create-collection",
-                element: isWalletAccountEqual ? <CreateCollection /> : <div>Unauthorized access</div>,
+                element: <CreateCollection />
+
               },
               {
                 path: "my-collections",
