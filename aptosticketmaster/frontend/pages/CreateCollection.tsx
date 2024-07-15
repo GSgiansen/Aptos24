@@ -21,7 +21,7 @@ import { ConfirmButton } from "@/components/ui/confirm-button";
 import { createCollection } from "@/entry-functions/create_collection";
 // Datetime functions
 import { format } from 'date-fns';
-import { VITE_MASTER_ACCOUNT } from "../constants";
+import { masterAccounts } from "../constants";
 
 
 export function CreateCollection() {
@@ -55,9 +55,13 @@ export function CreateCollection() {
   const [isUploading, setIsUploading] = useState(false);
 
   const [isWalletAccountEqual, setIsWalletAccountEqual] = useState(false);
+
+
+  
   useEffect(() => {
     // Check if the wallet account is equal to the master account
-    if (account && account.address === VITE_MASTER_ACCOUNT) {
+
+    if (account &&  masterAccounts.find((masterAccount: string) => masterAccount === account.address)) {
       setIsWalletAccountEqual(true);
     } else {
       setIsWalletAccountEqual(false);
