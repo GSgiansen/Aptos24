@@ -12,6 +12,8 @@ const EventDetail = () => {
     CAS, TS_ERA
   ];
 
+  console.log(eventId)
+
   const event = events.find((e) => e.id === eventId);
 
   if (!event) {
@@ -49,7 +51,7 @@ const EventDetail = () => {
           </p>
         </motion.div>
       </div> */}
-      <HeroSection />
+      <HeroSection page={eventId}/>
     </motion.div>
   );
 };
