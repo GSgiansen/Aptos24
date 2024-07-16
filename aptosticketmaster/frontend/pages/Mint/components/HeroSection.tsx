@@ -26,10 +26,15 @@ import { config } from "@/config";
 // Internal enrty functions
 import { mintNFT } from "@/entry-functions/mint_nft";
 
-interface HeroSectionProps {}
+interface HeroSectionProps {
+  page ?: string;
+}
 
-export const HeroSection: React.FC<HeroSectionProps> = () => {
-  const { data } = useGetCollectionData();
+export const HeroSection: React.FC<HeroSectionProps> = ({page}) => {
+  const addr = page == "1" ? "0x6746cf4de7cd2237c050d41560169a76249161dd71d8f245e335f32321eec4d4" : "0xafda23f742a9fb71ec5cdf5c56ccb42c9c7a4942c1d50a1fe3f7c28c3db93a27"
+  // console.log(addr)
+  const { data } = useGetCollectionData(addr);
+  // console.log(data)
   const queryClient = useQueryClient();
   const { account, signAndSubmitTransaction } = useWallet();
   const [nftCount, setNftCount] = useState(1);
@@ -49,6 +54,11 @@ export const HeroSection: React.FC<HeroSectionProps> = () => {
     setNftCount(1);
   };
 
+  const description = collection?.description ?? config.defaultCollection?.description;
+
+  // Split the description into lines
+  const lines = description.split('\n').filter(line => line.trim() !== '');
+
   return (
     <section className="hero-container flex flex-col md:flex-row gap-6 px-4 max-w-screen-xl mx-auto w-full">
       <Image
@@ -63,15 +73,32 @@ export const HeroSection: React.FC<HeroSectionProps> = () => {
       />
       <div className="basis-3/5 flex flex-col gap-4">
         <h1 className="title-md">{collection?.collection_name ?? config.defaultCollection?.name}</h1>
-        <Socials />
-        <p className="body-sm">{collection?.description ?? config.defaultCollection?.description}</p>
+        {/* <Socials /> */}
+        <div>
+          {lines.map((line, index) => {
+            // Split each line into header and content using the first occurrence of ':'
+            const [header, ...content] = line.split(':');
+            const contentString = content.join(':').trim();
+
+            // Only render if both header and content are not empty
+            if (header.trim() && contentString) {
+              return (
+                <p key={index} className="body-sm">
+                  <strong>{header.trim()}:</strong> {contentString}
+                </p>
+              );
+            }
+
+            return null; // Don't render if either header or content is missing
+          })}
+        </div>
 
         <Card>
           <CardContent
             fullPadding
             className="flex flex-col md:flex-row gap-4 md:justify-between items-start md:items-center flex-wrap"
           >
-            <form onSubmit={mintNft} className="flex flex-col md:flex-row gap-4 w-full md:basis-1/4">
+            <form onSubmit={mintNft} className="flex flex-col md:flex-row gap-4 w-full md:basis-1/3">
               <Input
                 type="number"
                 disabled={!data?.isMintActive}

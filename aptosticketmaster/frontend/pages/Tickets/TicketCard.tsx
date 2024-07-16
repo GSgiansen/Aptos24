@@ -34,9 +34,9 @@ const TicketCard = (ticket: Ticket) => {
         <CardHeader> 
           <CardTitle>{ticket.event_name}</CardTitle>
         </CardHeader>
-        <CardContent>
-            <img src={metadata?.image || "" } alt={ticket.event_name} />
-              <Button onClick={() => verifyTicket(ticket, wallet)}>Verify Ticket</Button>
+        <CardContent className=" p-4">
+            <img src={metadata?.image || "" } alt={ticket.event_name} className="w-64 h-64 object-cover rounded-lg p-4"/>
+            <Button className="m-4">Verify Ticket</Button>
         </CardContent>
       </Card>
   );

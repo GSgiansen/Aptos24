@@ -9,26 +9,26 @@ import { WalletContextState } from "@aptos-labs/wallet-adapter-react";
  * therefore it is not recommended to use it in production
  *
  */
-export function getEventsAndTickets(wallet: WalletContextState) {
-  const [events, setEvents] = useState<Array<Event>>([]);
-  const [tickets, setTickets] = useState<Array<Ticket>>([]);
+export async function getEventsAndTickets(wallet: WalletContextState) {
+  // const [events, setEvents] = useState<Array<Event>>([]);
+  // const [tickets, setTickets] = useState<Array<Ticket>>([]);
 
-  useEffect(() => {
-    async function run() {
+  // useEffect(() => {
+    // async function run() {
       // fetch the contract registry address
       const registry = await getRegistry();
       // fetch collections objects created under that contract registry address
       const objects = await getObjects(registry);
       // get each collection object data
       const events = await getEvents(objects);
-      setEvents(events);
+      // setEvents(events);
 
       const tickets = await getTickets(events, wallet);
-      setTickets(tickets)
-    }
+      // setTickets(tickets)
+    // }
 
-    run();
-  }, []);
+  //   run();
+  // }, []);
 
   return {events, tickets};
 }
@@ -112,8 +112,16 @@ export type Event = {
     name: string;
     description: string;
     id: string;
-    image_uri: string;
+    uri: string;
     creator_addr: string;
     current_supply: number;
     max_supply: number;
+    creator_address: string;
+    collection_id: string;
+    collection_name: string;
+    cdn_asset_uris: {
+      cdn_animation_uri: string;
+      cdn_image_uri: string;
+    };
+    
 };

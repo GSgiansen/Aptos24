@@ -145,7 +145,7 @@ export function CreateCollection() {
         \n
         Show Time: ${formattedShowTime}
         \n
-        Pricing: ${pricing}
+        Pricing: ${pricing} APT
       `.trim();
 
       // Submit a create_collection entry function transaction
