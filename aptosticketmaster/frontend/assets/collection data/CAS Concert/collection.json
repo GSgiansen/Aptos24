@@ -1,5 +1,5 @@
 {
-    "creatorAddress": "placeholder",
+    "creatorAddress": "0xb6f87b1760730a8d23c6115eb6c407166f22f5c7a9c070ee6255e2659baf66c1",
     "collectionName": "Taylor Swift Eras Category A Front Row",
     "minimumLedgerVersion": "BigInt(pendingTxn.version)",
     "artist": "Taylor Swift", 

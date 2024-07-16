@@ -21,7 +21,7 @@ export const CAS : Event = {
     creator_addr: "0x06114bc6190d9aa31eeb2c97fbce228c39657d9154360d3546843ddd8e620cc0",
     current_supply: 1,
     max_supply: 2000,
-    eventUnixTime: 1721141164,
+    eventUnixTime: 1721445515,
 }
 
 export const TS_ERA : Event= {

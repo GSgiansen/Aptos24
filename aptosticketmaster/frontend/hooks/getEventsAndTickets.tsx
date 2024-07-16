@@ -2,6 +2,7 @@ import { AccountAddress } from "@aptos-labs/ts-sdk";
 import { useState, useEffect } from "react";
 
 import { aptosClient } from "@/utils/aptosClient";
+import { WeekNumberLabel } from "react-day-picker";
 
 /**
  * A react hook to get all events created by main account.
@@ -125,4 +126,5 @@ export type Event = {
       cdn_animation_uri: string;
       cdn_image_uri: string;
     };
+    eventUnixTime: number;
 };
