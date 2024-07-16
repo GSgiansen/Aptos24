@@ -10,6 +10,7 @@ Aptos Ticket Master is a decentralized application built on the Aptos blockchain
 ### Prerequisites
   * React
   * pnpm
+  * npm
 
 ### Steps
   1. Clone the repo
@@ -21,15 +22,17 @@ cd Aptos24/aptosticketmaster
 ```
 npm install
 ```
-  3. Create a .env file in the root directory and add the following variables:
+  3. Initialise the contract, and enter private key when prompted.
 ```
-PROJECT_NAME=aptosticketmaster
-VITE_APP_NETWORK=testnet
+npm run move:init
+npm run move:publish
+```
+  4. Update .env file in the root directory and add the following variables:
+```
 VITE_COLLECTION_CREATOR_ADDRESS=your-wallet-address
-VITE_MODULE_ADDRESS=0xeb801d451a3a6d390aac6e356cee6bec44392de6ff8b77ceeb710f255d19d86b (to replace for production following steps [here](https://aptos.dev/en/build/create-aptos-dapp/templates/digital-asset#create-a-nft-collection-page))
 VITE_MASTER_ACCOUNTS=your-wallet-address
 ```
-  4. Start the development server:
+  5. Start the development server:
 ```
 npm run dev
 ```
