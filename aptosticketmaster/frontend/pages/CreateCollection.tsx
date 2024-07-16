@@ -35,8 +35,8 @@ export function CreateCollection() {
 
   // Collection data entered by the user on UI
   const [collectionName, setCollectionName] = useState<string>('');
-  const [movieDetails, setMovieDetails] = useState<string>('');
-  const [movieType, setMovieType] = useState<string>('');
+  const [concertDetails, setConcertDetails] = useState<string>('');
+  const [concertType, setConcertType] = useState<string>('');
   const [showDate, setShowDate] = useState<Date>();
   const [showTime, setShowTime] = useState<string>();
   const [pricing, setPricing] = useState<number>();
@@ -139,9 +139,9 @@ export function CreateCollection() {
 
       // Concatenate the description fields
       const collectionDescription = `
-        Movie Details: ${movieDetails}
+        Concert Details: ${concertDetails}
         \n
-        Movie Type: ${movieType}
+        Concert Type: ${concertType}
         \n
         Show Time: ${formattedShowTime}
         \n
@@ -190,7 +190,7 @@ export function CreateCollection() {
       {isWalletAccountEqual? 
       (
 
-      <><LaunchpadHeader title="Movie Event Creation" /><div className="flex flex-col md:flex-row items-start justify-between px-4 py-2 gap-4 max-w-screen-xl mx-auto">
+      <><LaunchpadHeader title="Concert Event Creation" /><div className="flex flex-col md:flex-row items-start justify-between px-4 py-2 gap-4 max-w-screen-xl mx-auto">
             <div className="w-full md:w-2/3 flex flex-col gap-y-4 order-2 md:order-1">
               {(!account || account.address !== CREATOR_ADDRESS) && (
                 <WarningAlert title={account ? "Wrong account connected" : "No account connected"}>
@@ -207,7 +207,7 @@ export function CreateCollection() {
 
               <Card>
                 <CardHeader>
-                  <CardDescription>Upload images of the movie and ticket, along with the metadata</CardDescription>
+                  <CardDescription>Upload images of the concert and ticket, along with the metadata</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="flex flex-col items-start justify-between">
@@ -281,8 +281,8 @@ export function CreateCollection() {
               <LabeledInput
                 id="collection-name"
                 required
-                label="Movie Title"
-                tooltip="Title of the movie"
+                label="Concert Title"
+                tooltip="Title of the concert"
                 disabled={isUploading || !account}
                 onChange={(e) => {
                   setCollectionName(e.target.value);
@@ -290,24 +290,24 @@ export function CreateCollection() {
                 type="text" />
 
               <LabeledInput
-                id="movie-details"
+                id="concert-details"
                 required
-                label="Movie Details"
-                tooltip="Details about the movie"
+                label="Concert Details"
+                tooltip="Details about the concert"
                 disabled={isUploading || !account}
                 onChange={(e) => {
-                  setMovieDetails(e.target.value);
+                  setConcertDetails(e.target.value);
                 } }
                 type="text" />
 
               <LabeledInput
-                id="movie-type"
+                id="concert-type"
                 required
-                label="Movie Type"
-                tooltip="The type of movie, such as IMAX, 3D, etc."
+                label="Concert Catergory"
+                tooltip="The type of seating, such as CAT1, CAT2 etc."
                 disabled={isUploading || !account}
                 onChange={(e) => {
-                  setMovieType(e.target.value);
+                  setConcertType(e.target.value);
                 } }
                 type="text" />
 
@@ -315,7 +315,7 @@ export function CreateCollection() {
                 <DateTimeInput
                   id="show-date"
                   label="Show Date"
-                  tooltip="Date of the movie showing"
+                  tooltip="Date of the concert showing"
                   disabled={isUploading || !account}
                   date={showDate}
                   onDateChange={setShowDate}
@@ -328,7 +328,7 @@ export function CreateCollection() {
                 id="max-supply"
                 required
                 label="Number of Seats"
-                tooltip="The maximum number of seats that is offered for this movie"
+                tooltip="The maximum number of seats that is offered for this concert"
                 disabled={isUploading || !account}
                 onChange={(e) => {
                   setMaxSupply(parseInt(e.target.value));
@@ -356,7 +356,7 @@ export function CreateCollection() {
                 } } />
 
               <ConfirmButton
-                title="Add Movie Event"
+                title="Add Concert Event"
                 className="self-start"
                 onSubmit={onCreateCollection}
                 disabled={!account ||
@@ -386,7 +386,7 @@ export function CreateCollection() {
               </Card>
             </div>
           </div></>) 
-      : (<div>Only the master account can create a movie event</div>)}
+      : (<div>Only the master account can create a concert event</div>)}
     </>
   );
 }

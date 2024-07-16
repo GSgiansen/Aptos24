@@ -23,10 +23,10 @@ export function Header() {
         {IS_DEV && (
           <>
             <Link className={buttonVariants({ variant: "link" })} to={"/my-collections"}>
-              My Collections
+              My Concerts
             </Link>
             <Link className={buttonVariants({ variant: "link" })} to={"/create-collection"}>
-              Create Collection
+              Create Concert
             </Link>
           </>
         )}
