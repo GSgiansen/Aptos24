@@ -21,11 +21,11 @@ export const LaunchpadHeader: FC<LaunchpadHeaderProps> = ({ title }) => {
         </Link>
         {location.pathname === "/create-collection" ? (
           <Link className={buttonVariants({ variant: "link" })} to={"/my-collections"}>
-            My Collections
+            My Concerts
           </Link>
         ) : (
           <Link className={buttonVariants({ variant: "link" })} to={"/create-collection"}>
-            Create Collection
+            Create Concert
           </Link>
         )}
 
