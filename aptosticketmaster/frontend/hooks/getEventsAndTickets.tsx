@@ -114,8 +114,15 @@ export type Event = {
     name: string;
     description: string;
     id: string;
-    image_uri: string;
+    uri: string;
     creator_addr: string;
     current_supply: number;
     max_supply: number;
+    creator_address: string;
+    collection_id: string;
+    collection_name: string;
+    cdn_asset_uris: {
+      cdn_animation_uri: string;
+      cdn_image_uri: string;
+    };
 };

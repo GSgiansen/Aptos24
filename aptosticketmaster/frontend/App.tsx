@@ -42,7 +42,7 @@ function App() {
                 element: <Mint />,
               },
               {
-                path: "events/:eventId",
+                path: ":eventId",
                 element: <EventDetail />,
               },
             ],

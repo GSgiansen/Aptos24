@@ -63,7 +63,7 @@ export const HeroSection: React.FC<HeroSectionProps> = () => {
       />
       <div className="basis-3/5 flex flex-col gap-4">
         <h1 className="title-md">{collection?.collection_name ?? config.defaultCollection?.name}</h1>
-        <Socials />
+        {/* <Socials /> */}
         <p className="body-sm">{collection?.description ?? config.defaultCollection?.description}</p>
 
         <Card>
@@ -71,7 +71,7 @@ export const HeroSection: React.FC<HeroSectionProps> = () => {
             fullPadding
             className="flex flex-col md:flex-row gap-4 md:justify-between items-start md:items-center flex-wrap"
           >
-            <form onSubmit={mintNft} className="flex flex-col md:flex-row gap-4 w-full md:basis-1/4">
+            <form onSubmit={mintNft} className="flex flex-col md:flex-row gap-4 w-full md:basis-1/3">
               <Input
                 type="number"
                 disabled={!data?.isMintActive}

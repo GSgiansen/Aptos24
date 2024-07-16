@@ -2,44 +2,24 @@ import { useParams } from "react-router-dom";
 import { format } from "date-fns";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button"; // Assume you have a Button component
+import { CAS, TS_ERA } from "./EventType";
+import { HeroSection } from "../Mint/components/HeroSection";
 
 const EventDetail = () => {
   const { eventId } = useParams();
+
   const events = [
-    {
-      eventId: "1",
-      eventName: "Concert Fun",
-      eventUnixTime: 1720581515,
-    },
-    {
-      eventId: "2",
-      eventName: "Festival Fun",
-      eventUnixTime: 1717989515,
-    },
-    {
-      eventId: "3",
-      eventName: "Conference Fun",
-      eventUnixTime: 1721445515,
-    },
-    {
-      eventId: "4",
-      eventName: "Seminar Yes",
-      eventUnixTime: 1723581515,
-    },
-    {
-      eventId: "5",
-      eventName: "Workshop Yes",
-      eventUnixTime: 1724581515,
-    },
+    CAS, TS_ERA
   ];
-  const event = events.find((e) => e.eventId === eventId);
+
+  const event = events.find((e) => e.id === eventId);
 
   if (!event) {
     return <div>Event not found</div>;
   }
 
   const handlePurchase = () => {
-    alert(`Purchasing tickets for ${event.eventName}`);
+    alert(`Purchasing tickets for ${event.name}`);
   };
 
   return (
@@ -49,10 +29,12 @@ const EventDetail = () => {
       transition={{ type: "spring", stiffness: 70, damping: 15 }}
       className="max-w-4xl mx-auto p-4"
     >
-      <h1 className="text-3xl font-bold mb-4">{event.eventName}</h1>
-      <p className="text-lg mb-2">Date: {format(new Date(event.eventUnixTime * 1000), "MMM dd, yyyy")}</p>
-      <p className="text-lg mb-2">Time: {format(new Date(event.eventUnixTime * 1000), "HH:mm")}</p>
-      <Button onClick={handlePurchase} className="mt-4">
+      {/* <h1 className="text-3xl font-bold mb-4">{event.name}</h1>
+      <img src={event.image_uri} alt={event.name} className="w-full h-100 object-cover rounded pb-10" />
+      <p className="text-2xl mb-2 font-bold">Date: {format(new Date(event.eventUnixTime * 1000), "MMM dd, yyyy")}</p>
+      <p className="text-2xl  mb-2 font-bold">Time: {format(new Date(event.eventUnixTime * 1000), "HH:mm")}</p>
+      <p className="text-2xl  mb-2 font-bold">  Total Number of Tickets: {event.max_supply}</p>
+      <Button onClick={handlePurchase} className="text-lg  mb-2 font-bold mt-4">
         Purchase Tickets
       </Button>
       <div className="mt-8">
@@ -62,12 +44,12 @@ const EventDetail = () => {
           transition={{ delay: 0.5 }}
           className="p-4 border rounded shadow"
         >
-          <p className="text-md">
-            Enjoy an unforgettable experience at {event.eventName}. Get your tickets now and be part of an amazing
-            event!
+          <p className="text-2xl  mb-2 font-bold">
+            {event.description}
           </p>
         </motion.div>
-      </div>
+      </div> */}
+      <HeroSection />
     </motion.div>
   );
 };
