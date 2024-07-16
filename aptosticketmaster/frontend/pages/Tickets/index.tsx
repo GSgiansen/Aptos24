@@ -19,7 +19,7 @@ export function Tickets() {
   }, [wallet]);
 
   return (
-    <div>
+    <div className="hero-container flex flex-col md:flex-col gap-6 px-4 max-w-screen-xl mx-auto w-full">
       {tickets.map((ticket) => (
         <TicketCard key={ticket.id} {...ticket} />
       ))}
