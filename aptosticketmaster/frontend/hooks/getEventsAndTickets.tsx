@@ -1,9 +1,7 @@
 import { AccountAddress } from "@aptos-labs/ts-sdk";
 import { useState, useEffect } from "react";
-
 import { aptosClient } from "@/utils/aptosClient";
-import { WeekNumberLabel } from "react-day-picker";
-
+import { WalletContextState } from "@aptos-labs/wallet-adapter-react";
 /**
  * A react hook to get all events created by main account.
  *
@@ -11,7 +9,7 @@ import { WeekNumberLabel } from "react-day-picker";
  * therefore it is not recommended to use it in production
  *
  */
-export function getEventsAndTickets() {
+export function getEventsAndTickets(wallet: WalletContextState) {
   const [events, setEvents] = useState<Array<Event>>([]);
   const [tickets, setTickets] = useState<Array<Ticket>>([]);
 
@@ -25,14 +23,14 @@ export function getEventsAndTickets() {
       const events = await getEvents(objects);
       setEvents(events);
 
-      const tickets = await getTickets(events);
+      const tickets = await getTickets(events, wallet);
       setTickets(tickets)
     }
 
     run();
   }, []);
 
-  return [events, tickets];
+  return {events, tickets};
 }
 
 const getRegistry = async () => {
@@ -83,10 +81,9 @@ const getEvents = async (objects: Array<string>) => {
   return events;
 };
 
-const getTickets = async (events: Event[]) => {
-  const addr = import.meta.env.VITE_COLLECTION_CREATOR_ADDRESS
+const getTickets = async (events: Event[], wallet: WalletContextState) => {
   const tokens = await aptosClient().getOwnedDigitalAssets({
-    ownerAddress: addr,
+    ownerAddress: wallet.account!.address,
   });
   const events_id = events.map((event) => event.id);
   const filteredTokens = tokens.filter((token) => events_id.includes(token.current_token_data!.collection_id));
@@ -126,5 +123,5 @@ export type Event = {
       cdn_animation_uri: string;
       cdn_image_uri: string;
     };
-    eventUnixTime: number;
+    
 };
