@@ -26,10 +26,15 @@ import { config } from "@/config";
 // Internal enrty functions
 import { mintNFT } from "@/entry-functions/mint_nft";
 
-interface HeroSectionProps {}
+interface HeroSectionProps {
+  page ?: string;
+}
 
-export const HeroSection: React.FC<HeroSectionProps> = () => {
-  const { data } = useGetCollectionData();
+export const HeroSection: React.FC<HeroSectionProps> = ({page}) => {
+  const addr = page == "1" ? "0x6746cf4de7cd2237c050d41560169a76249161dd71d8f245e335f32321eec4d4" : "0xafda23f742a9fb71ec5cdf5c56ccb42c9c7a4942c1d50a1fe3f7c28c3db93a27"
+  console.log(addr)
+  const { data } = useGetCollectionData(addr);
+  console.log(data)
   const queryClient = useQueryClient();
   const { account, signAndSubmitTransaction } = useWallet();
   const [nftCount, setNftCount] = useState(1);
