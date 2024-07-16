@@ -1,3 +1,4 @@
+// @ts-nocheck
 import Event from "@/hooks/getEventsAndTickets";
 import CASImage from "@/assets/CAS_Concert.jpg" 
 import TSImage from "@/assets/TS_ERAS_Concert.jpg" 

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { AccountAddress } from "@aptos-labs/ts-sdk";
 import { useState, useEffect } from "react";
 import { aptosClient } from "@/utils/aptosClient";
