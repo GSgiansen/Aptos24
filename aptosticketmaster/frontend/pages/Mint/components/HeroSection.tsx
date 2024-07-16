@@ -49,6 +49,11 @@ export const HeroSection: React.FC<HeroSectionProps> = () => {
     setNftCount(1);
   };
 
+  const description = collection?.description ?? config.defaultCollection?.description;
+
+  // Split the description into lines
+  const lines = description.split('\n').filter(line => line.trim() !== '');
+
   return (
     <section className="hero-container flex flex-col md:flex-row gap-6 px-4 max-w-screen-xl mx-auto w-full">
       <Image
@@ -64,7 +69,24 @@ export const HeroSection: React.FC<HeroSectionProps> = () => {
       <div className="basis-3/5 flex flex-col gap-4">
         <h1 className="title-md">{collection?.collection_name ?? config.defaultCollection?.name}</h1>
         {/* <Socials /> */}
-        <p className="body-sm">{collection?.description ?? config.defaultCollection?.description}</p>
+        <div>
+          {lines.map((line, index) => {
+            // Split each line into header and content using the first occurrence of ':'
+            const [header, ...content] = line.split(':');
+            const contentString = content.join(':').trim();
+
+            // Only render if both header and content are not empty
+            if (header.trim() && contentString) {
+              return (
+                <p key={index} className="body-sm">
+                  <strong>{header.trim()}:</strong> {contentString}
+                </p>
+              );
+            }
+
+            return null; // Don't render if either header or content is missing
+          })}
+        </div>
 
         <Card>
           <CardContent
