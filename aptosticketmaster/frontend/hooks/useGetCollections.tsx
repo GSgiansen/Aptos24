@@ -2,6 +2,7 @@ import { AccountAddress, GetCollectionDataResponse } from "@aptos-labs/ts-sdk";
 import { useState, useEffect } from "react";
 
 import { aptosClient } from "@/utils/aptosClient";
+import { getEventList } from "./getEventsAndTickets";
 /**
  * A react hook to get all collections under the current contract.
  *
