@@ -2,10 +2,9 @@ import { Outlet, RouterProvider, createBrowserRouter } from "react-router-dom";
 import { Mint } from "@/pages/Mint";
 import { CreateCollection } from "@/pages/CreateCollection";
 import { MyCollections } from "@/pages/MyCollections";
-import { useWallet } from "@aptos-labs/wallet-adapter-react";
-import { VITE_MASTER_ACCOUNT } from "./constants";
 import { Events } from "./pages/Events";
 import EventDetail from "./pages/Events/EventDetail";
+import { Tickets } from "./pages/Tickets";
 
 function Layout() {
   return (
@@ -45,6 +44,10 @@ function App() {
                 path: "events/:eventId",
                 element: <EventDetail />,
               },
+              {
+                path: "tickets",
+                element: <Tickets />,
+              }
             ],
           },
         ])}
