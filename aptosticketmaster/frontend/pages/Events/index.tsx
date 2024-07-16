@@ -5,6 +5,8 @@ import { DatePickerWithRange } from "@/components/ui/date-range-picker";
 import { useState } from "react";
 import { DateRange } from "react-day-picker";
 import { Link } from "react-router-dom";
+import { Header } from "@/components/Header";
+
 
 export function Events() {
   const [date, setDate] = useState<DateRange | undefined>({
@@ -66,8 +68,9 @@ export function Events() {
   };
 
   return (
-    <div className="p-4 flex flex-col gap-4">
-      <div className="flex justify-center">
+    <div className="flex items-center justify-between px-4 py-2 max-w-screen-xl mx-auto w-full flex-wrap">
+      <Header/>
+      <div className="flex justify-center p-4">
         <input
           type="text"
           placeholder="Search for event name"
@@ -76,16 +79,16 @@ export function Events() {
           className="mb-4 p-2 border border-gray-300 rounded"
         />
       </div>
-      <DatePickerWithRange date={date} setDate={setDate} />
+      <DatePickerWithRange date={date} setDate={setDate} className="p-4"/>
       <motion.div
         initial="hidden"
         animate="visible"
         variants={containerVariants}
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4"
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-2 gap-4"
       >
         {filteredEvents.map((event) => (
           <motion.div key={event.eventId} variants={itemVariants}>
-            <Link to={`/events/${event.eventId}`} className="block">
+            <Link to={`/events/${event.eventId}`} className="block p-4" >
               <Card className="flex flex-row gap-4 p-4 items-center hover:bg-gray-100 transition-colors duration-200">
                 <div className="text-4xl font-bold text-gray-700">
                   {format(new Date(event.eventUnixTime * 1000), "MMM dd, yyyy")}

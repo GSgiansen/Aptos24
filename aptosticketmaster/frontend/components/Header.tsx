@@ -9,10 +9,10 @@ import { config } from "@/config";
 export function Header() {
   const { data } = useGetCollectionData();
 
-  const title = useMemo(() => {
-    return data?.collection.collection_name ?? config.defaultCollection?.name ?? "NFT Collection Launchpad";
-  }, [data?.collection]);
-
+  // const title = useMemo(() => {
+  //   return data?.collection.collection_name ?? config.defaultCollection?.name ?? "NFT Collection Launchpad";
+  // }, [data?.collection]);
+    const title = "Aptos Ticket Master"
   return (
     <div className="flex items-center justify-between px-4 py-2 max-w-screen-xl mx-auto w-full flex-wrap">
       <h1 className="display">

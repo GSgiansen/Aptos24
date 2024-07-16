@@ -26,7 +26,7 @@ function App() {
             children: [
               {
                 path: "/",
-                element: <Mint />,
+                element:<Events />,
               },
               {
                 path: "create-collection",
@@ -39,7 +39,7 @@ function App() {
               },
               {
                 path: "events",
-                element: <Events />,
+                element: <Mint />,
               },
               {
                 path: "events/:eventId",

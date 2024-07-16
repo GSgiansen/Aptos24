@@ -1,4 +1,3 @@
-import React from "react";
 import { useParams } from "react-router-dom";
 import { format } from "date-fns";
 import { motion } from "framer-motion";
