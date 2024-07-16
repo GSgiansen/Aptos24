@@ -2,10 +2,13 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button"; // Assume you have a Button component
 import { Ticket } from "@/hooks/getEventsAndTickets";
 import { useEffect, useState } from "react";
+import { verifyTicket } from "@/hooks/verifyTicket";
+import { useWallet } from "@aptos-labs/wallet-adapter-react";
 
 const TicketCard = (ticket: Ticket) => {
   const [metadata, setMetadata] = useState<TicketMetadata | null>(null);
-
+  const wallet = useWallet();
+  
   interface TicketMetadata {
     image: string;
     external_url: string;
