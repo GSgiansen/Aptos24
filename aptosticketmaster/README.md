@@ -25,8 +25,8 @@ npm install
 ```
 PROJECT_NAME=aptosticketmaster
 VITE_APP_NETWORK=testnet
-VITE_COLLECTION_CREATOR_ADDRESS="your-wallet-address"
-VITE_MODULE_ADDRESS=0xeb801d451a3a6d390aac6e356cee6bec44392de6ff8b77ceeb710f255d19d86b
+VITE_COLLECTION_CREATOR_ADDRESS=your-wallet-address
+VITE_MODULE_ADDRESS=0xeb801d451a3a6d390aac6e356cee6bec44392de6ff8b77ceeb710f255d19d86b (to replace for production following steps [here](https://aptos.dev/en/build/create-aptos-dapp/templates/digital-asset#create-a-nft-collection-page))
 VITE_MASTER_ACCOUNTS=your-wallet-address
 ```
   4. Start the development server:
