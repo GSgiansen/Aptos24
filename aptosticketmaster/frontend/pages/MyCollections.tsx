@@ -26,10 +26,10 @@ export function MyCollections() {
 
   return (
     <>
-      <LaunchpadHeader title="My Collections" />
+      <LaunchpadHeader title="My Concerts" />
       <Table className="max-w-screen-xl mx-auto">
         {!collections.length && (
-          <TableCaption>A list of the collections created under the current contract.</TableCaption>
+          <TableCaption>A list of the concerts created under the current contract.</TableCaption>
         )}
         <TableHeader>
           <TableRow>
