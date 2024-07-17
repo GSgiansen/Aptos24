@@ -1,6 +1,6 @@
-##**Aptos TicketMaster**
-###Presented by **xDraco**
-####Team Members: *Kwoh Jin Yuan, Tan Gian Sen, Kang Yue Hern, Lucius Pua*
+## **Aptos TicketMaster**
+### resented by **xDraco**
+#### Team Members: *Kwoh Jin Yuan, Tan Gian Sen, Kang Yue Hern, Lucius Pua*
 
 ## Submission for **Track 1**
 GitHub repo link: 
