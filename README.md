@@ -1,8 +1,8 @@
 ## **Aptos TicketMaster**
-### resented by **xDraco**
+### Presented by **xDraco**
 #### Team Members: *Kwoh Jin Yuan, Tan Gian Sen, Kang Yue Hern, Lucius Pua*
 
-## Submission for **Track 1**
+## Submission for ** Move on Aptos Hackathon: Track 1**
 GitHub repo link: 
 https://github.com/GSgiansen/Aptos24
 
@@ -11,6 +11,8 @@ Aptos Ticketmaster emulates event ticketing through NFTs and blockchain technolo
 
 ## Pitch Deck link:
 https://docs.google.com/presentation/d/1ZSEmxDKo9P6htgfbCM3N12Npaus8NW7GnRM_nON5Ors/edit?usp=sharing
+
+## Testing Instructions
 
 
 ## List of tech stack:
