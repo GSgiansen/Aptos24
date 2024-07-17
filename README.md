@@ -2,7 +2,7 @@
 ### Presented by **xDraco**
 #### Team Members: *Kwoh Jin Yuan, Tan Gian Sen, Kang Yue Hern, Lucius Pua*
 
-## Submission for ** Move on Aptos Hackathon: Track 1**
+## Submission for **Move on Aptos Hackathon: NFTs, Social, Gaming**
 GitHub repo link: 
 https://github.com/GSgiansen/Aptos24
 
