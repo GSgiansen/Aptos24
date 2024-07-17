@@ -2,7 +2,7 @@
 
 ### Presented by **xDraco**
 
-#### Team Members: *Kwoh Jin Yuan, Tan Gian Sen, Kang Yue Hern, Lucius Pua*
+#### Team Members: *Kwoh Jin Yuan, Tan Gian Sen, Kang Yue Hern, Chua Wee Yeow, Lucius Pua*
 
 ## Submission for **Move on Aptos Hackathon: NFTs, Social, Gaming**
 
